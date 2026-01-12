@@ -14,12 +14,6 @@ enum TransactionStatus {
   ERROR
 }
 
-enum DeliveryStatus {
-  PENDING
-  READY
-  FAILED
-}
-
 model Product {
   id String @id @default(uuid())
   name String
@@ -30,7 +24,6 @@ model Product {
   priceCents Int
   currency String @default("COP")
   sku String @unique
-  active Boolean @default(true)
 
   stock Stock?
   transactions Transaction[]
@@ -40,68 +33,60 @@ model Product {
 }
 
 model Stock {
-  productId String @id
+  id String @id @default(uuid())
+  productId String @unique
   unitsAvailable Int
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
   updatedAt DateTime @updatedAt
+
+  product Product  @relation(fields: [productId], references: [id])
 }
 
 model Customer {
-  id String @id @default(uuid())
-  fullName String
-  email String
-  phone String
+  id String   @id @default(uuid())
+  fullName  String
+  email String @unique
 
   deliveries Delivery[]
   transactions Transaction[]
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
 }
 
+
 model Delivery {
-  id String @id @default(uuid())
+  id        String   @id @default(uuid())
+  address   String
   customerId String
 
-  addressLine1 String
-  addressLine2 String?
-  city String
-  state String?
-  postalCode String?
-  notes String?
-
-  feeCents Int
-  status DeliveryStatus @default(PENDING)
-
-  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customer  Customer @relation(fields: [customerId], references: [id])
   transactions Transaction[]
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
 
 model Transaction {
   id String @id @default(uuid())
-  transactionNumber String @unique
-
-  productId String
-  customerId String
-  deliveryId String?
-
-  quantity Int
-
-  amountProductCents Int
-  amountBaseFeeCents Int
-  amountDeliveryFeeCents Int
-  amountTotalCents Int
-
+  reference String @unique
   status TransactionStatus @default(PENDING)
 
-  providerReference String?
-  failureReason String?
+  amountInCents Int
+  currency String @default("COP")
+
+  productId String
+  quantity Int
+
+  wompiTransactionId String? @unique
+
+  customerId String?
+  deliveryId String?
 
   product Product @relation(fields: [productId], references: [id])
-  customer Customer @relation(fields: [customerId], references: [id])
+  customer Customer? @relation(fields: [customerId], references: [id])
   delivery Delivery? @relation(fields: [deliveryId], references: [id])
 
   createdAt DateTime @default(now())

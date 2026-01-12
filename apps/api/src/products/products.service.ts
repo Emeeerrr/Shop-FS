@@ -11,13 +11,12 @@ export class ProductsService {
       include: { stock: true },
     });
 
-    if (!product || !product.active) throw new NotFoundException('Product not found');
+    if (!product) throw new NotFoundException('Product not found');
     return product;
   }
 
   async getAll() {
     return this.prisma.product.findMany({
-      where: { active: true },
       include: { stock: true },
       orderBy: { createdAt: 'asc' },
     });

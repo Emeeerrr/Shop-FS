@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@shop-fs/api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -76,6 +76,6 @@
     "testEnvironment": "node"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node --transpile-only prisma/seed.ts"
   }
 }

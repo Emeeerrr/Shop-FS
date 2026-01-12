@@ -1,13 +1,40 @@
-import { IsInt, IsString, Min } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsString, Min } from "class-validator";
+
+class CustomerDto {
+  @IsString() @IsNotEmpty()
+  fullName: string;
+
+  @IsEmail()
+  email: string;
+}
+
+class DeliveryDto {
+  @IsString() @IsNotEmpty()
+  addressLine1: string;
+}
+
+class WompiDto {
+  @IsString() @IsNotEmpty()
+  cardToken: string;
+
+  @IsString() @IsNotEmpty()
+  acceptanceToken: string;
+
+  @IsString() @IsNotEmpty()
+  acceptPersonalAuth: string;
+
+  @IsInt() @Min(1)
+  installments: number;
+}
 
 export class CreatePaymentDto {
-  @IsString()
-  productId!: string;
+  @IsString() @IsNotEmpty()
+  productId: string;
 
-  @IsInt()
-  @Min(1)
-  quantity!: number;
+  @IsInt() @Min(1)
+  quantity: number;
 
-  @IsString()
-  cardNumber!: string;
+  customer: CustomerDto;
+  delivery: DeliveryDto;
+  wompi: WompiDto;
 }

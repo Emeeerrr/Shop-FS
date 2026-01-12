@@ -1,13 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { PaymentsService } from './payments.service';
-import { CreatePaymentDto } from './dto/create-payment.dto';
+import { Body, Controller, Post } from "@nestjs/common";
+import { PaymentsService } from "./payments.service";
+import { CreatePaymentDto } from "./dto/create-payment.dto";
 
-@Controller('payments')
+@Controller("payments")
 export class PaymentsController {
-  constructor(private service: PaymentsService) {}
+  constructor(private readonly payments: PaymentsService) {}
 
   @Post()
-  pay(@Body() dto: CreatePaymentDto) {
-    return this.service.pay(dto);
+  async create(@Body() dto: CreatePaymentDto) {
+    return this.payments.createPayment(dto);
   }
 }

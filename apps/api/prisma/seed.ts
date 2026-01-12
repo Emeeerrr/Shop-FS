@@ -3,6 +3,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  console.log('PRISMA CLIENT PATH:', require.resolve('@prisma/client'));
+  console.log('CWD:', process.cwd());
+  console.log('MODELS:', Object.keys(prisma).filter(k => !k.startsWith('_')).sort());
   const products = [
     {
       sku: 'CAFE-001',
@@ -86,7 +89,6 @@ async function main() {
         description: p.description,
         priceCents: p.priceCents,
         currency: 'COP',
-        // imageUrl entra por default en el schema 👌
         stock: {
           create: { unitsAvailable: p.stock },
         },
