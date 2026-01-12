@@ -1,1 +1,38 @@
 node_modules
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Env files (NUNCA al repo)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build outputs (monorepo global)
+dist/
+build/
+out/
+
+# Turborepo / cache tools (por si acaso)
+.turbo/
+.cache/
