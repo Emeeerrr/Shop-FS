@@ -9,4 +9,10 @@ export class ProductsController {
   getById(@Param('id') id: string) {
     return this.service.getById(id);
   }
+
+  @Get()
+  getAll() {
+    return this.service.getAll();
+  }
+
 }
