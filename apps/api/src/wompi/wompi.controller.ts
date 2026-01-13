@@ -6,7 +6,12 @@ export class WompiController {
   constructor(private readonly wompi: WompiService) {}
 
   @Get("acceptance-tokens")
-  async acceptanceTokens() {
-    return this.wompi.getAcceptanceTokens();
+  async getAcceptanceTokens() {
+    try {
+      return await this.wompi.getAcceptanceTokens();
+    } catch (e) {
+      console.error("acceptance-tokens error:", e);
+      throw e;
+    }
   }
 }
